@@ -4,7 +4,7 @@ Simple function to display data as a tree structure.
 <br>
 ![Display As Tree](.github/displayastree.png)
 <br>
-\*Screenshot taken from [DevScript](https://www.npmjs.com/package/ts-devscript) to be used as an example.\*
+_Screenshot taken from [DevScript](https://www.npmjs.com/package/ts-devscript) to be used as an example._
 
 ## Compatability
 
