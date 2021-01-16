@@ -1,0 +1,32 @@
+{
+	"name": "displayastree",
+	"description": "Simple function to display data as a tree structure.",
+	"version": "1.0.0",
+	"main": "index.js",
+	"repository": "git@github.com:Bas950/DisplayAsTree.git",
+	"author": "Bas950",
+	"contributors": [
+		"Timeraa",
+		"Jumbo_1907"
+	],
+	"license": "MPL-2.0",
+	"files": [
+		"bin"
+	],
+	"keywords": [
+		"typescript",
+		"tree",
+		"data"
+	],
+	"scripts": {
+		"build": "rimraf bin && tsc --skipLibCheck"
+	},
+	"homepage": "https://github.com/Bas950/DisplayAsTree#readme",
+	"bugs": {
+		"url": "https://github.com/Bas950/DisplayAsTree/issues"
+	},
+	"types": "bin/index.d.ts",
+	"devDependencies": {
+		"rimraf": "^3.0.2"
+	}
+}
