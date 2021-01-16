@@ -71,7 +71,7 @@ export class DisplayAsTree {
 			const section = sections[i],
 				isLast = i === length - 1;
 
-			let char = "";
+			let char: string | null = "";
 
 			if (isLast) char = this.endChar;
 			else char = this.treeChar;
@@ -79,9 +79,9 @@ export class DisplayAsTree {
 			output = output.concat(
 				this.getData(section.name, section.sections).map(s => {
 					const c = char;
-					char = "";
+					char = null;
 					return (
-						(c
+						(c === null
 							? isLast
 								? this.getSpacesOfLength(this.treeChar.length)
 								: this.midChar

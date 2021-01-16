@@ -64,8 +64,8 @@ var DisplayAsTree = /** @class */ (function () {
                 char = this_1.treeChar;
             output = output.concat(this_1.getData(section.name, section.sections).map(function (s) {
                 var c = char;
-                char = "";
-                return ((c
+                char = null;
+                return ((c === null
                     ? isLast
                         ? _this.getSpacesOfLength(_this.treeChar.length)
                         : _this.midChar
