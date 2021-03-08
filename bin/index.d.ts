@@ -1,16 +1,16 @@
-export declare class DisplayAsTree {
+export declare class Tree {
     /**
      * Name of the tree.
      */
     name: string;
     /**
-     * Sections of the tree.
+     * Branches of the tree.
      */
-    sections: TreeSection[];
-    private startChar;
+    branches: Branch[];
+    private headChar;
     private treeChar;
-    private midChar;
-    private endChar;
+    private lineChar;
+    private lastChar;
     /**
      * Make a new tree.
      *
@@ -18,17 +18,17 @@ export declare class DisplayAsTree {
      * @param options Custom line characters
      */
     constructor(name: string, options?: {
-        startChar?: string;
+        headChar?: string;
         treeChar?: string;
-        midChar?: string;
-        endChar?: string;
+        lineChar?: string;
+        lastChar?: string;
     });
     /**
-     * Add sections to the main tree.
+     * Add branches to the main tree.
      *
-     * @param sections Sections to add to the tree.
+     * @param branches Branches to add to the tree.
      */
-    addSection(sections: TreeSection[] | string[]): this;
+    addBranch(branches: Branch[] | string[]): this;
     private getData;
     private getSpacesOfLength;
     private getAsStringList;
@@ -41,25 +41,25 @@ export declare class DisplayAsTree {
      */
     log(): void;
 }
-export declare class TreeSection {
+export declare class Branch {
     /**
-     * Name of the tree section.
+     * Name of the tree branch.
      */
     name: string;
     /**
-     * Sections of the tree section.
+     * Branches of the tree section.
      */
-    sections: TreeSection[];
+    branches: Branch[];
     /**
-     * Make a new tree section.
+     * Make a new tree branch.
      *
-     * @param name The name of your tree section.
+     * @param name The name of your tree branch.
      */
     constructor(name: string);
     /**
      * Add more sections to the section.
      *
-     * @param sections Sections to add to the section.
+     * @param branches Sections to add to the section.
      */
-    addSection(sections: TreeSection[] | string[]): this;
+    addBranch(branches: Branch[] | string[]): this;
 }

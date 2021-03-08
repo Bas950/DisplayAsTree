@@ -1,16 +1,16 @@
-export class DisplayAsTree {
+export class Tree {
 	/**
 	 * Name of the tree.
 	 */
 	name: string;
 	/**
-	 * Sections of the tree.
+	 * Branches of the tree.
 	 */
-	sections: TreeSection[] = [];
-	private startChar = "● ";
+	branches: Branch[] = [];
+	private headChar = "● ";
 	private treeChar = "├─ ";
-	private midChar = "│  ";
-	private endChar = "╰─ ";
+	private lineChar = "│  ";
+	private lastChar = "╰─ ";
 
 	/**
 	 * Make a new tree.
@@ -21,21 +21,21 @@ export class DisplayAsTree {
 	constructor(
 		name: string,
 		options?: {
-			startChar?: string;
+			headChar?: string;
 			treeChar?: string;
-			midChar?: string;
-			endChar?: string;
+			lineChar?: string;
+			lastChar?: string;
 		}
 	) {
 		this.name = name;
-		if (options?.startChar) this.startChar = options.startChar;
+		if (options?.headChar) this.headChar = options.headChar;
 		if (options?.treeChar) this.treeChar = options.treeChar;
-		if (options?.midChar) this.midChar = options.midChar;
-		if (options?.endChar) this.endChar = options.endChar;
+		if (options?.lineChar) this.lineChar = options.lineChar;
+		if (options?.lastChar) this.lastChar = options.lastChar;
 
 		if (
-			this.treeChar.length !== this.midChar.length &&
-			this.midChar.length !== this.endChar.length
+			this.treeChar.length !== this.lineChar.length &&
+			this.lineChar.length !== this.lastChar.length
 		) {
 			throw new Error(
 				"treeChar, midChar, and endChar must have the same length."
@@ -44,47 +44,47 @@ export class DisplayAsTree {
 	}
 
 	/**
-	 * Add sections to the main tree.
+	 * Add branches to the main tree.
 	 *
-	 * @param sections Sections to add to the tree.
+	 * @param branches Branches to add to the tree.
 	 */
-	addSection(sections: TreeSection[] | string[]) {
-		for (const section of sections) {
-			if (typeof section === "string") {
-				this.sections.push(new TreeSection(section));
+	addBranch(branches: Branch[] | string[]) {
+		for (const branch of branches) {
+			if (typeof branch === "string") {
+				this.branches.push(new Branch(branch));
 			} else {
-				this.sections.push(section);
+				this.branches.push(branch);
 			}
 		}
 		return this;
 	}
 
-	private getData(name: string, sections: TreeSection[]) {
+	private getData(name: string, branches: Branch[]) {
 		let output: string[] = [];
-		const length = sections.length;
+		const length = branches.length;
 
 		output.push(name);
 
 		if (!length) return output;
 
 		for (let i = 0; i < length; i++) {
-			const section = sections[i],
+			const branch = branches[i],
 				isLast = i === length - 1;
 
 			let char: string | null = "";
 
-			if (isLast) char = this.endChar;
+			if (isLast) char = this.lastChar;
 			else char = this.treeChar;
 
 			output = output.concat(
-				this.getData(section.name, section.sections).map(s => {
+				this.getData(branch.name, branch.branches).map(s => {
 					const c = char;
 					char = null;
 					return (
 						(c === null
 							? isLast
 								? this.getSpacesOfLength(this.treeChar.length)
-								: this.midChar
+								: this.lineChar
 							: c) + s
 					);
 				})
@@ -102,7 +102,7 @@ export class DisplayAsTree {
 	}
 
 	private getAsStringList() {
-		return this.getData(this.startChar + this.name, this.sections);
+		return this.getData(this.headChar + this.name, this.branches);
 	}
 
 	/**
@@ -120,20 +120,20 @@ export class DisplayAsTree {
 	}
 }
 
-export class TreeSection {
+export class Branch {
 	/**
-	 * Name of the tree section.
+	 * Name of the tree branch.
 	 */
 	name: string;
 	/**
-	 * Sections of the tree section.
+	 * Branches of the tree section.
 	 */
-	sections: TreeSection[] = [];
+	branches: Branch[] = [];
 
 	/**
-	 * Make a new tree section.
+	 * Make a new tree branch.
 	 *
-	 * @param name The name of your tree section.
+	 * @param name The name of your tree branch.
 	 */
 	constructor(name: string) {
 		this.name = name;
@@ -142,14 +142,14 @@ export class TreeSection {
 	/**
 	 * Add more sections to the section.
 	 *
-	 * @param sections Sections to add to the section.
+	 * @param branches Sections to add to the section.
 	 */
-	addSection(sections: TreeSection[] | string[]) {
-		for (const section of sections) {
-			if (typeof section === "string") {
-				this.sections.push(new TreeSection(section));
+	addBranch(branches: Branch[] | string[]) {
+		for (const branch of branches) {
+			if (typeof branch === "string") {
+				this.branches.push(new Branch(branch));
 			} else {
-				this.sections.push(section);
+				this.branches.push(branch);
 			}
 		}
 		return this;

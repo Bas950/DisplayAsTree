@@ -1,74 +1,74 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TreeSection = exports.DisplayAsTree = void 0;
-var DisplayAsTree = /** @class */ (function () {
+exports.Branch = exports.Tree = void 0;
+var Tree = /** @class */ (function () {
     /**
      * Make a new tree.
      *
      * @param name The root name of your tree.
      * @param options Custom line characters
      */
-    function DisplayAsTree(name, options) {
+    function Tree(name, options) {
         /**
-         * Sections of the tree.
+         * Branches of the tree.
          */
-        this.sections = [];
-        this.startChar = "● ";
+        this.branches = [];
+        this.headChar = "● ";
         this.treeChar = "├─ ";
-        this.midChar = "│  ";
-        this.endChar = "╰─ ";
+        this.lineChar = "│  ";
+        this.lastChar = "╰─ ";
         this.name = name;
-        if (options === null || options === void 0 ? void 0 : options.startChar)
-            this.startChar = options.startChar;
+        if (options === null || options === void 0 ? void 0 : options.headChar)
+            this.headChar = options.headChar;
         if (options === null || options === void 0 ? void 0 : options.treeChar)
             this.treeChar = options.treeChar;
-        if (options === null || options === void 0 ? void 0 : options.midChar)
-            this.midChar = options.midChar;
-        if (options === null || options === void 0 ? void 0 : options.endChar)
-            this.endChar = options.endChar;
-        if (this.treeChar.length !== this.midChar.length &&
-            this.midChar.length !== this.endChar.length) {
+        if (options === null || options === void 0 ? void 0 : options.lineChar)
+            this.lineChar = options.lineChar;
+        if (options === null || options === void 0 ? void 0 : options.lastChar)
+            this.lastChar = options.lastChar;
+        if (this.treeChar.length !== this.lineChar.length &&
+            this.lineChar.length !== this.lastChar.length) {
             throw new Error("treeChar, midChar, and endChar must have the same length.");
         }
     }
     /**
-     * Add sections to the main tree.
+     * Add branches to the main tree.
      *
-     * @param sections Sections to add to the tree.
+     * @param branches Branches to add to the tree.
      */
-    DisplayAsTree.prototype.addSection = function (sections) {
-        for (var _i = 0, sections_1 = sections; _i < sections_1.length; _i++) {
-            var section = sections_1[_i];
-            if (typeof section === "string") {
-                this.sections.push(new TreeSection(section));
+    Tree.prototype.addBranch = function (branches) {
+        for (var _i = 0, branches_1 = branches; _i < branches_1.length; _i++) {
+            var branch = branches_1[_i];
+            if (typeof branch === "string") {
+                this.branches.push(new Branch(branch));
             }
             else {
-                this.sections.push(section);
+                this.branches.push(branch);
             }
         }
         return this;
     };
-    DisplayAsTree.prototype.getData = function (name, sections) {
+    Tree.prototype.getData = function (name, branches) {
         var _this = this;
         var output = [];
-        var length = sections.length;
+        var length = branches.length;
         output.push(name);
         if (!length)
             return output;
         var _loop_1 = function (i) {
-            var section = sections[i], isLast = i === length - 1;
+            var branch = branches[i], isLast = i === length - 1;
             var char = "";
             if (isLast)
-                char = this_1.endChar;
+                char = this_1.lastChar;
             else
                 char = this_1.treeChar;
-            output = output.concat(this_1.getData(section.name, section.sections).map(function (s) {
+            output = output.concat(this_1.getData(branch.name, branch.branches).map(function (s) {
                 var c = char;
                 char = null;
                 return ((c === null
                     ? isLast
                         ? _this.getSpacesOfLength(_this.treeChar.length)
-                        : _this.midChar
+                        : _this.lineChar
                     : c) + s);
             }));
         };
@@ -78,62 +78,62 @@ var DisplayAsTree = /** @class */ (function () {
         }
         return output;
     };
-    DisplayAsTree.prototype.getSpacesOfLength = function (length) {
+    Tree.prototype.getSpacesOfLength = function (length) {
         var spaces = "";
         for (var i = 0; i < length; i++) {
             spaces += " ";
         }
         return spaces;
     };
-    DisplayAsTree.prototype.getAsStringList = function () {
-        return this.getData(this.startChar + this.name, this.sections);
+    Tree.prototype.getAsStringList = function () {
+        return this.getData(this.headChar + this.name, this.branches);
     };
     /**
      * Get the tree as an string.
      */
-    DisplayAsTree.prototype.getAsString = function () {
+    Tree.prototype.getAsString = function () {
         return this.getAsStringList().join("\n");
     };
     /**
      * Console.log() the tree.
      */
-    DisplayAsTree.prototype.log = function () {
+    Tree.prototype.log = function () {
         return console.log(this.getAsString());
     };
-    return DisplayAsTree;
+    return Tree;
 }());
-exports.DisplayAsTree = DisplayAsTree;
-var TreeSection = /** @class */ (function () {
+exports.Tree = Tree;
+var Branch = /** @class */ (function () {
     /**
-     * Make a new tree section.
+     * Make a new tree branch.
      *
-     * @param name The name of your tree section.
+     * @param name The name of your tree branch.
      */
-    function TreeSection(name) {
+    function Branch(name) {
         /**
-         * Sections of the tree section.
+         * Branches of the tree section.
          */
-        this.sections = [];
+        this.branches = [];
         this.name = name;
     }
     /**
      * Add more sections to the section.
      *
-     * @param sections Sections to add to the section.
+     * @param branches Sections to add to the section.
      */
-    TreeSection.prototype.addSection = function (sections) {
-        for (var _i = 0, sections_2 = sections; _i < sections_2.length; _i++) {
-            var section = sections_2[_i];
-            if (typeof section === "string") {
-                this.sections.push(new TreeSection(section));
+    Branch.prototype.addBranch = function (branches) {
+        for (var _i = 0, branches_2 = branches; _i < branches_2.length; _i++) {
+            var branch = branches_2[_i];
+            if (typeof branch === "string") {
+                this.branches.push(new Branch(branch));
             }
             else {
-                this.sections.push(section);
+                this.branches.push(branch);
             }
         }
         return this;
     };
-    return TreeSection;
+    return Branch;
 }());
-exports.TreeSection = TreeSection;
+exports.Branch = Branch;
 //# sourceMappingURL=index.js.map
